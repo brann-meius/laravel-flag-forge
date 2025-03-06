@@ -1,0 +1,12 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Meius\FlagForge\Contracts\Bitwiseable;
+
+enum {{ class }}: int implements Bitwiseable
+{
+    //
+}
