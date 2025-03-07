@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Meius\LaravelFlagForge\Macros;
 
+use Closure;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
-use Meius\FlagForge\Contracts\Bitwiseable;
 use Meius\FlagForge\FlagManager;
 use Meius\LaravelFlagForge\Facades\Flag;
 
@@ -14,19 +14,21 @@ class WhereAllFlagsSetMacro extends Macro
 {
     protected string $name = 'whereAllFlagsSet';
 
-    /**
-     * @param FlagManager|Bitwiseable[] $value
-     */
-    public function closure(string $column, $value): EloquentBuilder|QueryBuilder
+    public function getClosure(): Closure
     {
-        if (is_array($value)) {
-            $value = Flag::combine(...$value);
-        }
+        $conductor = $this;
 
-        /** @var self|EloquentBuilder|QueryBuilder $this */
-        return $this->whereRaw(sprintf("(%s & ?) = ?", $this->prepareColumn($this, $column)), [
-            $value,
-            $value,
-        ]);
+        return function (string $column, FlagManager|array $manager) use ($conductor): EloquentBuilder|QueryBuilder {
+            /** @var EloquentBuilder|QueryBuilder $this */
+            $column = $conductor->prepareColumn($this, $column);
+            if (is_array($manager)) {
+                $manager = Flag::combine(...$manager);
+            }
+
+            return $this->whereRaw(sprintf("(%s & ?) = ?", $column), [
+                $manager,
+                $manager,
+            ]);
+        };
     }
 }

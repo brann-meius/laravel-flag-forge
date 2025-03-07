@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Meius\LaravelFlagForge\Macros;
 
+use Closure;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Meius\LaravelFlagForge\Contracts\Macros\MacroInterface;
@@ -30,7 +31,7 @@ abstract class Macro implements MacroInterface
     /**
      * Applies a bitwise check on the given column to determine if the flag is set.
      */
-    abstract public function closure(string $column, $value): EloquentBuilder|QueryBuilder;
+    abstract public function getClosure(): Closure;
 
     public static function instance(): Macro
     {
@@ -40,7 +41,7 @@ abstract class Macro implements MacroInterface
     public function register(): void
     {
         foreach ($this->getTargets() as $target) {
-            $target::macro($this->getName(), $this->closure(...));
+            $target::macro($this->getName(), $this->getClosure());
         }
     }
 
