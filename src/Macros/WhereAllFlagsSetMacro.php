@@ -4,31 +4,35 @@ declare(strict_types=1);
 
 namespace Meius\LaravelFlagForge\Macros;
 
-use Closure;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Builder as EBuilder;
+use Illuminate\Database\Query\Builder as QBuilder;
+use Meius\FlagForge\Contracts\Bitwiseable;
 use Meius\FlagForge\FlagManager;
 use Meius\LaravelFlagForge\Facades\Flag;
 
 class WhereAllFlagsSetMacro extends Macro
 {
-    protected string $name = 'whereAllFlagsSet';
-
-    public function getClosure(): Closure
+    /**
+     * @param class-string<EBuilder|QBuilder> $builder
+     */
+    public function registerFor(string $builder): void
     {
-        $conductor = $this;
+        $prepareColumn = $this->prepareColumn(...);
 
-        return function (string $column, FlagManager|array $manager) use ($conductor): EloquentBuilder|QueryBuilder {
-            /** @var EloquentBuilder|QueryBuilder $this */
-            $column = $conductor->prepareColumn($this, $column);
+        $builder::macro('whereAllFlagsSet', function (
+            string $column,
+            /** @var Bitwiseable[]|FlagManager $manager */
+            array|FlagManager $manager
+        ) use ($prepareColumn): EBuilder|QBuilder {
             if (is_array($manager)) {
                 $manager = Flag::combine(...$manager);
             }
 
-            return $this->whereRaw(sprintf("(%s & ?) = ?", $column), [
+            /** @var EBuilder|QBuilder $this */
+            return $this->whereRaw(sprintf("(%s & ?) = ?", $prepareColumn($this, $column)), [
                 $manager,
                 $manager,
             ]);
-        };
+        });
     }
 }

@@ -4,27 +4,28 @@ declare(strict_types=1);
 
 namespace Meius\LaravelFlagForge\Macros;
 
-use Closure;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Builder as EBuilder;
+use Illuminate\Database\Query\Builder as QBuilder;
 use Meius\FlagForge\Contracts\Bitwiseable;
 
 class WhereHasFlagMacro extends Macro
 {
-    protected string $name = 'whereHasFlag';
-
-    public function getClosure(): Closure
+    /**
+     * @param class-string<EBuilder|QBuilder> $builder
+     */
+    public function registerFor(string $builder): void
     {
-        $conductor = $this;
+        $prepareColumn = $this->prepareColumn(...);
 
-        return function (string $column, Bitwiseable $flag) use ($conductor): EloquentBuilder|QueryBuilder {
-            /** @var EloquentBuilder|QueryBuilder $this */
-            $column = $conductor->prepareColumn($this, $column);
-
-            return $this->whereRaw(sprintf("(%s & ?) = ?", $column), [
+        $builder::macro('whereHasFlag', function (
+            string $column,
+            Bitwiseable $flag
+        ) use ($prepareColumn): EBuilder|QBuilder {
+            /** @var EBuilder|QBuilder $this */
+            return $this->whereRaw(sprintf("(%s & ?) = ?", $prepareColumn($this, $column)), [
                 $flag->value,
-                $flag->value,
+                $flag->value
             ]);
-        };
+        });
     }
 }

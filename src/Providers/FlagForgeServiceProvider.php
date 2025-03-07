@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Meius\LaravelFlagForge\Providers;
 
+use Illuminate\Database\Eloquent\Builder as EBuilder;
+use Illuminate\Database\Query\Builder as QBuilder;
 use Illuminate\Support\ServiceProvider;
 use Meius\FlagForge\FlagManager;
 use Meius\LaravelFlagForge\Console\EnumMakeCommand;
+use Meius\LaravelFlagForge\Macros\Macro;
 use Meius\LaravelFlagForge\Macros\WhereAllFlagsSetMacro;
 use Meius\LaravelFlagForge\Macros\WhereAnyFlagsSetMacro;
 use Meius\LaravelFlagForge\Macros\WhereDoesntHaveFlagMacro;
@@ -17,11 +20,16 @@ use Meius\LaravelFlagForge\Macros\WhereHasFlagMacro;
  */
 class FlagForgeServiceProvider extends ServiceProvider
 {
+    protected array $macroTarget = [
+        EBuilder::class,
+        QBuilder::class,
+    ];
+
     protected array $macros = [
-        WhereHasFlagMacro::class,
-        WhereDoesntHaveFlagMacro::class,
         WhereAllFlagsSetMacro::class,
         WhereAnyFlagsSetMacro::class,
+        WhereDoesntHaveFlagMacro::class,
+        WhereHasFlagMacro::class,
     ];
 
     public function register(): void
@@ -45,8 +53,11 @@ class FlagForgeServiceProvider extends ServiceProvider
      */
     private function extendEloquentBuilder(): void
     {
-        foreach ($this->macros as $macro) {
-            $macro::instance()->register();
+        foreach ($this->macroTarget as $builder) {
+            foreach ($this->macros as $macro) {
+                /** @var Macro $macro */
+                $macro::instance()->registerFor($builder);
+            }
         }
     }
 }
