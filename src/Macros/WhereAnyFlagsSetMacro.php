@@ -15,19 +15,17 @@ class WhereAnyFlagsSetMacro extends Macro
     protected string $name = 'whereAnyFlagsSet';
 
     /**
-     * @param FlagManager|Bitwiseable[] $manager
+     * @param FlagManager|Bitwiseable[] $value
      */
-    public function closure(string $column, array|FlagManager $manager): EloquentBuilder|QueryBuilder
+    public function closure(string $column, $value): EloquentBuilder|QueryBuilder
     {
-        if (is_array($manager)) {
-            $manager = Flag::combine(...$manager);
+        if (is_array($value)) {
+            $value = Flag::combine(...$value);
         }
 
-        /**
-         * @var self|EloquentBuilder|QueryBuilder $this
-         */
+        /** @var self|EloquentBuilder|QueryBuilder $this */
         return $this->whereRaw(sprintf("(%s & ?) != 0", $this->prepareColumn($this, $column)), [
-            $manager,
+            $value,
         ]);
     }
 }

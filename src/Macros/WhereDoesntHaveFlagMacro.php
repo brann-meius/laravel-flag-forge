@@ -12,13 +12,14 @@ class WhereDoesntHaveFlagMacro extends Macro
 {
     protected string $name = 'whereDoesntHaveFlag';
 
-    public function closure(string $column, Bitwiseable $flag): EloquentBuilder|QueryBuilder
+    /**
+     * @param Bitwiseable $value
+     */
+    public function closure(string $column, $value): EloquentBuilder|QueryBuilder
     {
-        /**
-         * @var self|EloquentBuilder|QueryBuilder $this
-         */
+        /** @var self|EloquentBuilder|QueryBuilder $this */
         return $this->whereRaw(sprintf("(%s & ?) = 0", $this->prepareColumn($this, $column)), [
-            $flag->value,
+            $value->value,
         ]);
     }
 }

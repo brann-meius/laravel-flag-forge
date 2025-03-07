@@ -12,14 +12,15 @@ class WhereHasFlagMacro extends Macro
 {
     protected string $name = 'whereHasFlag';
 
-    public function closure(string $column, Bitwiseable $flag): EloquentBuilder|QueryBuilder
+    /**
+     * @param Bitwiseable $value
+     */
+    public function closure(string $column, $value): EloquentBuilder|QueryBuilder
     {
-        /**
-         * @var self|EloquentBuilder|QueryBuilder $this
-         */
+        /** @var self|EloquentBuilder|QueryBuilder $this */
         return $this->whereRaw(sprintf("(%s & ?) = ?", $this->prepareColumn($this, $column)), [
-            $flag->value,
-            $flag->value,
+            $value->value,
+            $value->value,
         ]);
     }
 }

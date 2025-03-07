@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Meius\LaravelFlagForge\Macros;
 
-use BadMethodCallException;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Meius\LaravelFlagForge\Contracts\Macros\MacroInterface;
@@ -12,8 +11,6 @@ use Meius\LaravelFlagForge\Contracts\Macros\MacroInterface;
 /**
  * Base class for query macros, allowing extension of both Eloquent and Query builders.
  * Each macro must define a `closure` method that will be used as the actual macro implementation.
- *
- * @method EloquentBuilder|QueryBuilder closure Applies a bitwise check on the given column to determine if the flag is set.
  */
 abstract class Macro implements MacroInterface
 {
@@ -30,6 +27,11 @@ abstract class Macro implements MacroInterface
         EloquentBuilder::class,
     ];
 
+    /**
+     * Applies a bitwise check on the given column to determine if the flag is set.
+     */
+    abstract public function closure(string $column, $value): EloquentBuilder|QueryBuilder;
+
     public static function instance(): Macro
     {
         return new static();
@@ -37,15 +39,8 @@ abstract class Macro implements MacroInterface
 
     public function register(): void
     {
-        if (!method_exists($this, 'closure')) {
-            throw new BadMethodCallException(sprintf(
-                'The macro class %s must implement a closure method.',
-                static::class
-            ));
-        }
-
         foreach ($this->getTargets() as $target) {
-            $target::macro($this->getName(), [$this, 'closure']);
+            $target::macro($this->getName(), $this->closure(...));
         }
     }
 
