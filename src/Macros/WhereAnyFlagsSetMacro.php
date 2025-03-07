@@ -12,6 +12,7 @@ use Meius\LaravelFlagForge\Facades\Flag;
 
 class WhereAnyFlagsSetMacro extends Macro
 {
+    public const SQL = '(%s & ?) != 0';
     /**
      * @param class-string<EBuilder|QBuilder> $builder
      */
@@ -29,7 +30,22 @@ class WhereAnyFlagsSetMacro extends Macro
             }
 
             /** @var EBuilder|QBuilder $this */
-            return $this->whereRaw(sprintf("(%s & ?) != 0", $prepareColumn($this, $column)), [
+            return $this->whereRaw(sprintf(WhereAnyFlagsSetMacro::SQL, $prepareColumn($this, $column)), [
+                $manager,
+            ]);
+        });
+
+        $builder::macro('orWhereAnyFlagSet', function (
+            string $column,
+            /** @var Bitwiseable[]|FlagManager $manager */
+            array|FlagManager $manager
+        ) use ($prepareColumn): EBuilder|QBuilder {
+            if (is_array($manager)) {
+                $manager = Flag::combine(...$manager);
+            }
+
+            /** @var EBuilder|QBuilder $this */
+            return $this->orWhereRaw(sprintf(WhereAnyFlagsSetMacro::SQL, $prepareColumn($this, $column)), [
                 $manager,
             ]);
         });

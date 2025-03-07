@@ -10,6 +10,8 @@ use Meius\FlagForge\Contracts\Bitwiseable;
 
 class WhereHasFlagMacro extends Macro
 {
+    public const SQL = '(%s & ?) = ?';
+
     /**
      * @param class-string<EBuilder|QBuilder> $builder
      */
@@ -22,7 +24,18 @@ class WhereHasFlagMacro extends Macro
             Bitwiseable $flag
         ) use ($prepareColumn): EBuilder|QBuilder {
             /** @var EBuilder|QBuilder $this */
-            return $this->whereRaw(sprintf("(%s & ?) = ?", $prepareColumn($this, $column)), [
+            return $this->whereRaw(sprintf(WhereHasFlagMacro::SQL, $prepareColumn($this, $column)), [
+                $flag->value,
+                $flag->value
+            ]);
+        });
+
+        $builder::macro('orWhereHasFlag', function (
+            string $column,
+            Bitwiseable $flag
+        ) use ($prepareColumn): EBuilder|QBuilder {
+            /** @var EBuilder|QBuilder $this */
+            return $this->orWhereRaw(sprintf(WhereHasFlagMacro::SQL, $prepareColumn($this, $column)), [
                 $flag->value,
                 $flag->value
             ]);
