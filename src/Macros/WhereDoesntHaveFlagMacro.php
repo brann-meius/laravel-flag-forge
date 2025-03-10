@@ -4,21 +4,39 @@ declare(strict_types=1);
 
 namespace Meius\LaravelFlagForge\Macros;
 
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Builder as EBuilder;
+use Illuminate\Database\Query\Builder as QBuilder;
 use Meius\FlagForge\Contracts\Bitwiseable;
 
 class WhereDoesntHaveFlagMacro extends Macro
 {
-    protected string $name = 'whereDoesntHaveFlag';
+    public const SQL = '(%s & ?) = 0';
 
-    public function closure(string $column, Bitwiseable $flag): EloquentBuilder|QueryBuilder
+    /**
+     * @param class-string<EBuilder|QBuilder> $builder
+     */
+    public function registerFor(string $builder): void
     {
-        /**
-         * @var self|EloquentBuilder|QueryBuilder $this
-         */
-        return $this->whereRaw(sprintf("(%s & ?) = 0", $this->prepareColumn($this, $column)), [
-            $flag->value,
-        ]);
+        $prepareColumn = $this->prepareColumn(...);
+
+        $builder::macro('whereDoesntHaveFlag', function (
+            string $column,
+            Bitwiseable $flag
+        ) use ($prepareColumn): EBuilder|QBuilder {
+            /** @var EBuilder|QBuilder $this */
+            return $this->whereRaw(sprintf(WhereDoesntHaveFlagMacro::SQL, $prepareColumn($this, $column)), [
+                $flag->value,
+            ]);
+        });
+
+        $builder::macro('orWhereDoesntHaveFlag', function (
+            string $column,
+            Bitwiseable $flag
+        ) use ($prepareColumn): EBuilder|QBuilder {
+            /** @var EBuilder|QBuilder $this */
+            return $this->orWhereRaw(sprintf(WhereDoesntHaveFlagMacro::SQL, $prepareColumn($this, $column)), [
+                $flag->value,
+            ]);
+        });
     }
 }

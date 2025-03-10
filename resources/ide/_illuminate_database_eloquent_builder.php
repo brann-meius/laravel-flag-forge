@@ -17,10 +17,14 @@ namespace Illuminate\Database\Eloquent {
          * It is not meant to be instantiated or used directly in your business logic, and it will not alter or break
          * any existing functionality.
          *
-         * @method Builder whereHasFlag(string $column, Bitwiseable $flag)
-         * @method Builder whereDoesntHaveFlag(string $column, Bitwiseable $flag)
-         * @method Builder whereAllFlagsSet(string $column, Bitwiseable[]|FlagManager $manager)
-         * @method Builder whereAnyFlagSet(string $column, Bitwiseable[]|FlagManager $manager)
+         * @method $this whereHasFlag(string $column, Bitwiseable $flag)
+         * @method $this whereDoesntHaveFlag(string $column, Bitwiseable $flag)
+         * @method $this whereAllFlagsSet(string $column, Bitwiseable[]|FlagManager $manager)
+         * @method $this whereAnyFlagSet(string $column, Bitwiseable[]|FlagManager $manager)
+         * @method $this orWhereHasFlag(string $column, Bitwiseable $flag)
+         * @method $this orWhereDoesntHaveFlag(string $column, Bitwiseable $flag)
+         * @method $this orWhereAllFlagsSet(string $column, Bitwiseable[]|FlagManager $manager)
+         * @method $this orWhereAnyFlagSet(string $column, Bitwiseable[]|FlagManager $manager)
          */
         class Builder
         {

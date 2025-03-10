@@ -4,31 +4,53 @@ declare(strict_types=1);
 
 namespace Meius\LaravelFlagForge\Macros;
 
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Builder as EBuilder;
+use Illuminate\Database\Query\Builder as QBuilder;
 use Meius\FlagForge\Contracts\Bitwiseable;
 use Meius\FlagForge\FlagManager;
 use Meius\LaravelFlagForge\Facades\Flag;
 
 class WhereAllFlagsSetMacro extends Macro
 {
-    protected string $name = 'whereAllFlagsSet';
+    public const SQL = '(%s & ?) = ?';
 
     /**
-     * @param FlagManager|Bitwiseable[] $manager
+     * @param class-string<EBuilder|QBuilder> $builder
      */
-    public function closure(string $column, array|FlagManager $manager): EloquentBuilder|QueryBuilder
+    public function registerFor(string $builder): void
     {
-        if (is_array($manager)) {
-            $manager = Flag::combine(...$manager);
-        }
+        $prepareColumn = $this->prepareColumn(...);
 
-        /**
-         * @var self|EloquentBuilder|QueryBuilder $this
-         */
-        return $this->whereRaw(sprintf("(%s & ?) = ?", $this->prepareColumn($this, $column)), [
-            $manager,
-            $manager,
-        ]);
+        $builder::macro('whereAllFlagsSet', function (
+            string $column,
+            /** @var Bitwiseable[]|FlagManager $manager */
+            array|FlagManager $manager
+        ) use ($prepareColumn): EBuilder|QBuilder {
+            if (is_array($manager)) {
+                $manager = Flag::combine(...$manager);
+            }
+
+            /** @var EBuilder|QBuilder $this */
+            return $this->whereRaw(sprintf(WhereAllFlagsSetMacro::SQL, $prepareColumn($this, $column)), [
+                $manager,
+                $manager,
+            ]);
+        });
+
+        $builder::macro('orWhereAllFlagsSet', function (
+            string $column,
+            /** @var Bitwiseable[]|FlagManager $manager */
+            array|FlagManager $manager
+        ) use ($prepareColumn): EBuilder|QBuilder {
+            if (is_array($manager)) {
+                $manager = Flag::combine(...$manager);
+            }
+
+            /** @var EBuilder|QBuilder $this */
+            return $this->orWhereRaw(sprintf(WhereAllFlagsSetMacro::SQL, $prepareColumn($this, $column)), [
+                $manager,
+                $manager,
+            ]);
+        });
     }
 }

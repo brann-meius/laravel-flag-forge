@@ -4,21 +4,33 @@ declare(strict_types=1);
 
 namespace Meius\LaravelFlagForge\Console;
 
+use Illuminate\Console\Concerns\CreatesMatchingTest;
+use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Illuminate\Foundation\Console\EnumMakeCommand as Command;
 
 /**
  * @codeCoverageIgnore
  */
-#[AsCommand(name: 'make:enum')]
-class EnumMakeCommand extends Command
+#[AsCommand(
+    name: 'make:bit-enum',
+    description: 'Create a new bitwise enum class',
+)]
+class EnumMakeCommand extends GeneratorCommand
 {
+    use CreatesMatchingTest;
+
+    protected $type = 'Enum';
+
     protected function getStub(): string
     {
-        if ($this->option('bitwise')) {
-            return __DIR__ . '/../../resources/stubs/enum.bitwise.stub';
-        }
+        return __DIR__ . '/../../resources/stubs/enum.bitwise.stub';
+    }
 
-        return parent::getStub();
+    protected function getDefaultNamespace($rootNamespace): string
+    {
+        return match (true) {
+            is_dir(app_path('Enumerations')) => $rootNamespace . '\\Enumerations',
+            default => $rootNamespace . '\\Enums',
+        };
     }
 }

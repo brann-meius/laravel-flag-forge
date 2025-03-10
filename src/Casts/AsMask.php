@@ -24,8 +24,9 @@ class AsMask implements CastsAttributes
     public function get(Model $model, string $key, mixed $value, array $attributes): FlagManager
     {
         if (is_int($value) || is_numeric($value) || is_null($value)) {
-            return new class((int)$value, $this->enum) extends FlagManager {
-                public function __construct(int $mask, protected string $enum) {
+            return new class ((int)$value, $this->enum) extends FlagManager {
+                public function __construct(int $mask, protected string $enum)
+                {
                     parent::__construct($mask);
                 }
             };
@@ -44,8 +45,8 @@ class AsMask implements CastsAttributes
             return $value->getMask();
         }
 
-        if (is_int($value) || is_numeric($value)) {
-            return (int) $value;
+        if (is_int($value) || is_numeric($value) || is_null($value)) {
+            return (int)$value;
         }
 
         throw new InvalidArgumentException(sprintf(
