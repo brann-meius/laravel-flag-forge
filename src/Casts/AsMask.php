@@ -44,7 +44,7 @@ class AsMask implements CastsAttributes
             return $value->getMask();
         }
 
-        if (is_int($value) || is_numeric($value)) {
+        if (is_int($value) || is_numeric($value) || is_null($value)) {
             return (int) $value;
         }
 

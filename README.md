@@ -1,6 +1,7 @@
 # Laravel Flag Forge Package
 
 [![License](https://img.shields.io/github/license/brann-meius/laravel-flag-forge)](LICENSE)
+[![codecov](https://codecov.io/gh/brann-meius/laravel-flag-forge/graph/badge.svg?token=Y5NC43U6ZE)](https://codecov.io/gh/brann-meius/laravel-flag-forge)
 [![PHP Version](https://img.shields.io/badge/php->=8.2-blue)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/laravel->=11.0-red)](https://laravel.com/)
 
