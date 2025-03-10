@@ -30,7 +30,7 @@ class ChatUser extends Pivot
     protected function casts(): array
     {
         return [
-            'permissions' => AsMask::class . ':'. Permission::class,
+            'permissions' => AsMask::class . ':' . Permission::class,
         ];
     }
 }
