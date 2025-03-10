@@ -5,12 +5,15 @@
          stopOnFailure="false">
     <testsuites>
         <testsuite name="Unit">
-            <directory suffix="Test.php">tests/Unit</directory>
+            <directory>tests/Unit</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
-            <directory>./src</directory>
+            <directory>src</directory>
         </include>
+        <report>
+            <clover outputFile="coverage.xml"/>
+        </report>
     </coverage>
 </phpunit>
