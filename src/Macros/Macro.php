@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Builder as EBuilder;
 use Illuminate\Database\Query\Builder as QBuilder;
 use Meius\LaravelFlagForge\Contracts\Macros\MacroInterface;
 
-/** @phpstan-consistent-constructor */
 abstract class Macro implements MacroInterface
 {
+    /**
+     * @phpstan-ignore-next-line
+     */
     public static function instance(): static
     {
         return new static();
