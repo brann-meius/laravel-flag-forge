@@ -11,7 +11,7 @@ use Meius\FlagForge\FlagManager;
 use Meius\LaravelFlagForge\Console\EnumMakeCommand;
 use Meius\LaravelFlagForge\Macros\Macro;
 use Meius\LaravelFlagForge\Macros\WhereAllFlagsSetMacro;
-use Meius\LaravelFlagForge\Macros\WhereAnyFlagsSetMacro;
+use Meius\LaravelFlagForge\Macros\WhereAnyFlagSetMacro;
 use Meius\LaravelFlagForge\Macros\WhereDoesntHaveFlagMacro;
 use Meius\LaravelFlagForge\Macros\WhereHasFlagMacro;
 
@@ -27,7 +27,7 @@ class FlagForgeServiceProvider extends ServiceProvider
 
     protected array $macros = [
         WhereAllFlagsSetMacro::class,
-        WhereAnyFlagsSetMacro::class,
+        WhereAnyFlagSetMacro::class,
         WhereDoesntHaveFlagMacro::class,
         WhereHasFlagMacro::class,
     ];
