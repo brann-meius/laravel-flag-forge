@@ -11,7 +11,7 @@ use Meius\LaravelFlagForge\Contracts\Macros\MacroInterface;
 abstract class Macro implements MacroInterface
 {
     /**
-     * @phpstan-ignore-next-line
+     * @phpstan-suppress UnsafeNewStatic
      */
     public static function instance(): static
     {
