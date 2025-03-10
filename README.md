@@ -1,7 +1,7 @@
 # Laravel Flag Forge Package
 
 [![License](https://img.shields.io/github/license/brann-meius/laravel-flag-forge)](LICENSE)
-[![PHP Version](https://img.shields.io/badge/php->=8.1-blue)](https://www.php.net/)
+[![PHP Version](https://img.shields.io/badge/php->=8.2-blue)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/laravel->=11.0-red)](https://laravel.com/)
 
 > **Recommendation:** Prior to integrating this wrapper into your application, please review the documentation for the
@@ -70,7 +70,7 @@ enhances your project with:
 
 ## Requirements
 
-- **PHP:** >= 8.1
+- **PHP:** >= 8.2
 - **Laravel:** >= 11.0
 
 ---

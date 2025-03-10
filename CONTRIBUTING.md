@@ -55,7 +55,7 @@ remains manageable and welcoming for all contributors.
 
 Make sure you have the following installed:
 
-- PHP 8.1 or higher
+- PHP 8.2 or higher
 - Composer
 - Git
 
