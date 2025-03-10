@@ -2,9 +2,9 @@
 
 ## Supported Versions
 
-| Version | Supported          |
-|---------|--------------------|
-| 1.0.x   | :check_mark:       |
+| Version | Supported |
+|---------|-----------|
+| 1.0.x   | ✅         |
 
 ## Reporting a Vulnerability
 
