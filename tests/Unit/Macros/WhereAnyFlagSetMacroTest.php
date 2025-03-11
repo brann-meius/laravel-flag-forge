@@ -22,8 +22,7 @@ class WhereAnyFlagSetMacroTest extends TestCase
         $builder = ChatUser::query()
             ->whereAnyFlagSet('permissions', $manager);
 
-        $this->assertEquals(
-            /** @lang text */
+        $this->assertEquals(/** @lang text */
             'select * from "chat_user" where ("permissions" & ?) != 0',
             $builder->toSql()
         );
@@ -42,8 +41,7 @@ class WhereAnyFlagSetMacroTest extends TestCase
             ->whereAnyFlagSet('permissions', $manager1)
             ->orWhereAnyFlagSet('permissions', $manager2);
 
-        $this->assertEquals(
-            /** @lang text */
+        $this->assertEquals(/** @lang text */
             'select * from "chat_user" where ("permissions" & ?) != 0 or ("permissions" & ?) != 0',
             $builder->toSql()
         );
