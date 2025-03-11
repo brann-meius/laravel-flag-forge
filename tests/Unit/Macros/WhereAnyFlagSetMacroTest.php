@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace Meius\LaravelFlagForge\Tests\Unit\Macros;
 
-use Meius\LaravelFlagForge\Facades\Flag;
-use Meius\LaravelFlagForge\Tests\Support\Enum\Permission;
+use Meius\FlagForge\Contracts\Bitwiseable;
+use Meius\FlagForge\FlagManager;
 use Meius\LaravelFlagForge\Tests\Support\Models\ChatUser;
 use Meius\LaravelFlagForge\Tests\TestCase;
+use Meius\LaravelFlagForge\Tests\Unit\Macros\DataProviders\ManagerDataProvider;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
 
 class WhereAnyFlagSetMacroTest extends TestCase
 {
-    public function testWhereAllFlagsSetMacroSuccessfulConnect(): void
+    /**
+     * @param Bitwiseable[]|FlagManager $manager
+     */
+    #[DataProviderExternal(ManagerDataProvider::class, 'flagsProvider')]
+    public function testWhereAllFlagsSetMacroSuccessfulConnect(array|FlagManager $manager): void
     {
         $builder = ChatUser::query()
-            ->whereAnyFlagSet('permissions', Flag::combine(
-                Permission::AddUsers,
-                Permission::RemoveUsers,
-            ));
+            ->whereAnyFlagSet('permissions', $manager);
 
         $this->assertEquals(
             /** @lang text */
@@ -25,18 +28,19 @@ class WhereAnyFlagSetMacroTest extends TestCase
             $builder->toSql()
         );
     }
-    public function testWhereAndOrWhereAllFlagsSetMacroSuccessfulConnect(): void
-    {
+
+    /**
+     * @param Bitwiseable[]|FlagManager $manager1
+     * @param Bitwiseable[]|FlagManager $manager2
+     */
+    #[DataProviderExternal(ManagerDataProvider::class, 'mixFlagsProvider')]
+    public function testWhereAndOrWhereAllFlagsSetMacroSuccessfulConnect(
+        array|FlagManager $manager1,
+        array|FlagManager $manager2
+    ): void {
         $builder = ChatUser::query()
-            ->whereAnyFlagSet('permissions', Flag::combine(
-                Permission::AddUsers,
-                Permission::RemoveUsers,
-                Permission::ManageChat,
-            ))
-            ->orWhereAnyFlagSet('permissions', Flag::combine(
-                Permission::DeleteMessages,
-                Permission::PinMessages,
-            ));
+            ->whereAnyFlagSet('permissions', $manager1)
+            ->orWhereAnyFlagSet('permissions', $manager2);
 
         $this->assertEquals(
             /** @lang text */

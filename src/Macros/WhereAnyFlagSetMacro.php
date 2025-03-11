@@ -13,6 +13,7 @@ use Meius\LaravelFlagForge\Facades\Flag;
 class WhereAnyFlagSetMacro extends Macro
 {
     public const SQL = '(%s & ?) != 0';
+
     /**
      * @param class-string<EBuilder|QBuilder> $builder
      */
