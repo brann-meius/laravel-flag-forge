@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Meius\FlagForge\FlagManager;
 use Meius\LaravelFlagForge\Casts\AsMask;
 use Meius\LaravelFlagForge\Facades\Flag;
-use Meius\LaravelFlagForge\Tests\Casts\AsInvalidMask;
+use Meius\LaravelFlagForge\Tests\Support\Casts\AsInvalidMask;
 use Meius\LaravelFlagForge\Tests\Support\Enum\Permission;
 use Meius\LaravelFlagForge\Tests\Support\Models\ChatUser;
 use Meius\LaravelFlagForge\Tests\TestCase;

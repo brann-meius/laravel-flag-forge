@@ -21,8 +21,7 @@ class WhereAllFlagsSetMacroTest extends TestCase
     {
         $builder = ChatUser::query()->whereAllFlagsSet('permissions', $manager);
 
-        $this->assertEquals(
-            /** @lang text */
+        $this->assertEquals(/** @lang text */
             'select * from "chat_user" where ("permissions" & ?) = ?',
             $builder->toSql()
         );
