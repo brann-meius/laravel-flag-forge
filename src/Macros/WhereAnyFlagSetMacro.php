@@ -10,9 +10,10 @@ use Meius\FlagForge\Contracts\Bitwiseable;
 use Meius\FlagForge\FlagManager;
 use Meius\LaravelFlagForge\Facades\Flag;
 
-class WhereAnyFlagsSetMacro extends Macro
+class WhereAnyFlagSetMacro extends Macro
 {
     public const SQL = '(%s & ?) != 0';
+
     /**
      * @param class-string<EBuilder|QBuilder> $builder
      */
@@ -30,7 +31,7 @@ class WhereAnyFlagsSetMacro extends Macro
             }
 
             /** @var EBuilder|QBuilder $this */
-            return $this->whereRaw(sprintf(WhereAnyFlagsSetMacro::SQL, $prepareColumn($this, $column)), [
+            return $this->whereRaw(sprintf(WhereAnyFlagSetMacro::SQL, $prepareColumn($this, $column)), [
                 $manager,
             ]);
         });
@@ -45,7 +46,7 @@ class WhereAnyFlagsSetMacro extends Macro
             }
 
             /** @var EBuilder|QBuilder $this */
-            return $this->orWhereRaw(sprintf(WhereAnyFlagsSetMacro::SQL, $prepareColumn($this, $column)), [
+            return $this->orWhereRaw(sprintf(WhereAnyFlagSetMacro::SQL, $prepareColumn($this, $column)), [
                 $manager,
             ]);
         });

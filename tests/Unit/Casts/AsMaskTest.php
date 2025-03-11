@@ -6,7 +6,9 @@ namespace Meius\LaravelFlagForge\Tests\Unit\Casts;
 
 use InvalidArgumentException;
 use Meius\FlagForge\FlagManager;
+use Meius\LaravelFlagForge\Casts\AsMask;
 use Meius\LaravelFlagForge\Facades\Flag;
+use Meius\LaravelFlagForge\Tests\Casts\AsInvalidMask;
 use Meius\LaravelFlagForge\Tests\Support\Enum\Permission;
 use Meius\LaravelFlagForge\Tests\Support\Models\ChatUser;
 use Meius\LaravelFlagForge\Tests\TestCase;
@@ -49,6 +51,22 @@ class AsMaskTest extends TestCase
             'Expected an instance of FlagManager, int, or a numeric string.');
 
         $chatUser->permissions = 'Tanos';
+    }
+
+    public function testThrowsGetMethodExceptionForInvalidType()
+    {
+        $chatUser = ChatUser::factory()->make();
+        $chatUser->mergeCasts(['permissions' => AsInvalidMask::class]);
+
+        $chatUser->permissions = 'Tanos';
+
+        $chatUser->mergeCasts(['permissions' => AsMask::class . ':' . Permission::class]);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid value type for casting "permissions": string. '
+            . 'Expected an int or a numeric string.');
+
+        $variable = $chatUser->permissions;
     }
 
     public function testWithFlagManager()
