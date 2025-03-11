@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Meius\LaravelFlagForge\Tests\Casts;
+namespace Meius\LaravelFlagForge\Tests\Support\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsInboundAttributes;
 use Illuminate\Database\Eloquent\Model;
