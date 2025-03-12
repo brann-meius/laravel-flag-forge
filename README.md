@@ -2,12 +2,13 @@
 
 [![License](https://img.shields.io/github/license/brann-meius/laravel-flag-forge)](LICENSE)
 [![codecov](https://codecov.io/gh/brann-meius/laravel-flag-forge/graph/badge.svg?token=Y5NC43U6ZE)](https://codecov.io/gh/brann-meius/laravel-flag-forge)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1a96ee301b6943969d5da4b0ed8e99d4)](https://app.codacy.com/gh/brann-meius/laravel-flag-forge/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![PHP Version](https://img.shields.io/badge/php->=8.2-blue)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/laravel->=11.0-red)](https://laravel.com/)
 
 > **Recommendation:** Prior to integrating this wrapper into your application, please review the documentation for the
-> underlying library [<ins>`meius/flag-forge`</ins>](https://github.com/brann-meius/flag-forge) to fully grasp its foundational
-> concepts and operations.
+> underlying library [<ins>`meius/flag-forge`</ins>](https://github.com/brann-meius/flag-forge) to fully grasp its
+> foundational concepts and operations.
 
 Laravel Flag Forge is a refined and sophisticated extension that effortlessly bridges the gap between the powerful
 bitwise flag management capabilities of the core library and the expressive nature of Laravel applications. This package
@@ -28,12 +29,12 @@ enhances your project with:
 - [Getting Started](#getting-started)
 - [Installation](#installation)
 - [Usage](#usage)
-    - [1. Creating Bitwise Enums](#1-creating-bitwise-enums)
-    - [2. Working with Eloquent (Attribute Casting)](#2-working-with-eloquent-attribute-casting)
-    - [3. Mastering Bitwise Operations](#3-mastering-bitwise-operations)
-    - [4. Using the Facade](#4-using-the-facade)
-    - [5. Leveraging Database Query Methods](#5-leveraging-database-query-methods)
-    - [6. Integrating with Authorization Policies](#6-integrating-with-authorization-policies)
+  - [1. Creating Bitwise Enums](#1-creating-bitwise-enums)
+  - [2. Working with Eloquent (Attribute Casting)](#2-working-with-eloquent-attribute-casting)
+  - [3. Mastering Bitwise Operations](#3-mastering-bitwise-operations)
+  - [4. Using the Facade](#4-using-the-facade)
+  - [5. Leveraging Database Query Methods](#5-leveraging-database-query-methods)
+  - [6. Integrating with Authorization Policies](#6-integrating-with-authorization-policies)
 - [Support](#support)
 - [License](#license)
 
@@ -78,8 +79,8 @@ enhances your project with:
 
 ## Getting Started
 
-To get started with the `meius/laravel-flag-forge` package, follow the installation instructions below and check out the usage
-examples.
+To get started with the `meius/laravel-flag-forge` package, follow the installation instructions below and check out the
+usage examples.
 
 ---
 

@@ -44,8 +44,9 @@ This Code of Conduct applies to all community spaces related to this library, in
 
 ## Enforcement
 
-Instances of unacceptable behavior may be reported by contacting the project maintainers at **bohdan.meius@gmail.com**.
-All complaints will be reviewed and investigated promptly and with discretion. Consequences for violating this Code of
+Instances of unacceptable behavior may be reported by contacting the project maintainers at
+[**bohdan.meius@gmail.com**](mailto:bohdan.meius@gmail.com). All complaints will be reviewed and investigated promptly
+and with discretion. Consequences for violating this Code of
 Conduct may include a temporary or permanent ban from the community, depending on the severity of the offense.
 
 ## Reporting Guidelines
@@ -53,7 +54,7 @@ Conduct may include a temporary or permanent ban from the community, depending o
 If you believe someone is violating this Code of Conduct, please:
 
 - **Document the incident:** Include dates, times, and any relevant details.
-- **Submit a report:** Email the details to **bohdan.meius@gmail.com**.
+- **Submit a report:** Email the details to [**bohdan.meius@gmail.com**](mailto:bohdan.meius@gmail.com).
 - **Follow up if needed:** If you have questions about your report or need further assistance, feel free to reach out.
 
 ## Attribution
