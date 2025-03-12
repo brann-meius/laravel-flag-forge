@@ -8,8 +8,7 @@
 
 > **Recommendation:** Prior to integrating this wrapper into your application, please review the documentation for the
 > underlying library [<ins>`meius/flag-forge`</ins>](https://github.com/brann-meius/flag-forge) to fully grasp its
-> foundational
-> concepts and operations.
+> foundational concepts and operations.
 
 Laravel Flag Forge is a refined and sophisticated extension that effortlessly bridges the gap between the powerful
 bitwise flag management capabilities of the core library and the expressive nature of Laravel applications. This package
